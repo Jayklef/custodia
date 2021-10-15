@@ -1,7 +1,12 @@
 package com.jayklef.custodia.service;
 
+import com.jayklef.custodia.dto.ItemDTO;
+import com.jayklef.custodia.error.ClientNotFoundException;
+import com.jayklef.custodia.model.Category;
 import com.jayklef.custodia.model.Client;
 import com.jayklef.custodia.model.Item;
+import com.jayklef.custodia.model.RiskLevel;
+import com.jayklef.custodia.repository.CategoryRepository;
 import com.jayklef.custodia.repository.ClientRepository;
 import com.jayklef.custodia.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,25 +14,50 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Objects;
-
-import static java.util.Objects.nonNull;
 
 @Service
 public class ItemServiceImpl implements ItemService{
 
     private ItemRepository itemRepository;
     private ClientRepository clientRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    public ItemServiceImpl(ItemRepository itemRepository, ClientRepository clientRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, ClientRepository clientRepository, CategoryRepository categoryRepository) {
         this.itemRepository = itemRepository;
         this.clientRepository = clientRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
-    public Item saveItem(Item item) {
-        return itemRepository.save(item);
+    public Item saveItem(ItemDTO itemDTO) throws ClientNotFoundException {
+
+            //validate earning category exist
+            final Category category = this.categoryRepository
+                    .getById(itemDTO.getCategoryId());
+
+            if(category == null){
+                throw new EntityNotFoundException(String.format("Category with Id: %s not found.", itemDTO.getCategoryId()));
+            }
+
+            // validate profile exist
+            final Client client = this.clientRepository.getById(itemDTO.getClientId());
+            if(client == null){
+                throw new ClientNotFoundException(String.format("Client with Id: %s not found.", itemDTO.getClientId()));
+            }
+
+           //RiskLevel.values();
+
+            Item item = Item.builder()
+                    .itemName(itemDTO.getItemName())
+                    .itemValue(itemDTO.getItemValue())
+                    .category(category)
+                    .client(client)
+                    .build();
+
+             RiskLevel.values();
+
+            return itemRepository.save(item);
     }
 
     @Override
@@ -58,10 +88,6 @@ public class ItemServiceImpl implements ItemService{
 
             itemInDb.setItemValue(item.getItemValue());
         }
-
-       /* if (Objects.nonNull(item.getItemValue())){
-            itemInDb.setItemValue(item.getItemValue());
-        }*/
 
         return itemRepository.save(itemInDb);
     }
