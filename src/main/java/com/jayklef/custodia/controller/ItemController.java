@@ -1,6 +1,7 @@
 package com.jayklef.custodia.controller;
 
 import com.jayklef.custodia.model.Item;
+import com.jayklef.custodia.service.ClientService;
 import com.jayklef.custodia.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,12 @@ import java.util.List;
 public class ItemController {
 
     private ItemService itemService;
+    private ClientService clientService;
 
     @Autowired
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, ClientService clientService) {
         this.itemService = itemService;
+        this.clientService = clientService;
     }
 
     @PostMapping("/items")
