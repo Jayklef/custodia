@@ -1,4 +1,4 @@
-package com.jayklef.custodia.error;
+package com.jayklef.custodia.exception;
 
 import com.jayklef.custodia.model.ErrorMessage;
 import org.springframework.http.HttpStatus;

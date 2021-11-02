@@ -1,4 +1,4 @@
-package com.jayklef.custodia.error;
+package com.jayklef.custodia.exception;
 
 public class ItemNotFoundException extends Exception{
     public ItemNotFoundException() {

@@ -1,7 +1,7 @@
 package com.jayklef.custodia.service;
 
 import com.jayklef.custodia.dto.ItemDTO;
-import com.jayklef.custodia.error.ClientNotFoundException;
+import com.jayklef.custodia.exception.ClientNotFoundException;
 import com.jayklef.custodia.model.Category;
 import com.jayklef.custodia.model.Client;
 import com.jayklef.custodia.model.Item;
