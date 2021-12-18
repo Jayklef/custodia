@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -55,7 +56,7 @@ public class ItemServiceImpl implements ItemService{
                     .client(client)
                     .build();
 
-             RiskLevel.values();
+        //     RiskLevel.values();
 
             return itemRepository.save(item);
     }
@@ -80,13 +81,29 @@ public class ItemServiceImpl implements ItemService{
     public Item updateItem(Long itemId, Item item) {
         Item itemInDb = itemRepository.findById(itemId).get();
 
-        if (!item.getItemName().isBlank()){
+        if (!Objects.nonNull(item.getItemName())&&
+            !"".equalsIgnoreCase(item.getItemName())){
             itemInDb.setItemName(item.getItemName());
+        }
+
+        if (!Objects.nonNull(item.getCategory())&&
+                !"".equalsIgnoreCase(item.getCategory().toString())){
             itemInDb.setCategory(item.getCategory());
-            itemInDb.setClient(item.getClient());
+        }
 
-
+        if (!Objects.nonNull(item.getItemValue())&&
+                !"".equalsIgnoreCase(item.getItemValue().toString())){
             itemInDb.setItemValue(item.getItemValue());
+        }
+
+        if (!Objects.nonNull(item.getClient())&&
+                !"".equalsIgnoreCase(item.getClient().getClass().getName())){
+            itemInDb.setClient(item.getClient());
+        }
+
+        if (!Objects.nonNull(item.getRiskLevel())&&
+                !"".equalsIgnoreCase(item.getRiskLevel().getClass().getEnumConstants().toString())){
+            itemInDb.setRiskLevel(item.getRiskLevel());
         }
 
         return itemRepository.save(itemInDb);

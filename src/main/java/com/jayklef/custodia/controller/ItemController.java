@@ -39,7 +39,7 @@ public class ItemController {
     }
 
     @GetMapping("/items/clients/{clientId}")
-    public ResponseEntity<List<Item>> getItemByClientName(@PathVariable("clientId") Long clientId){
+    public ResponseEntity<List<Item>> getItemByClientId(@PathVariable("clientId") Long clientId){
         return ResponseEntity.ok().body(itemService.getItemsByClientId(clientId));
     }
 

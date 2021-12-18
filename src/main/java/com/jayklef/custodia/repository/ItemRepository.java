@@ -11,5 +11,5 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
 
-    public List<Item> findAllByClient(Client  client);
+     List<Item> findAllByClient(Client client);
 }

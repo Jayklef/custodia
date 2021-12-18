@@ -7,13 +7,13 @@ import com.jayklef.custodia.model.Item;
 import java.util.List;
 
 public interface ItemService {
-    public Item saveItem(ItemDTO itemDTO) throws ClientNotFoundException;
+     Item saveItem(ItemDTO itemDTO) throws ClientNotFoundException;
 
-    public List<Item> getItemsList();
+     List<Item> getItemsList();
 
-    public Item getItemById(Long itemId);
+     Item getItemById(Long itemId);
 
-    public List<Item> getItemsByClientId(Long clientId);
+     List<Item> getItemsByClientId(Long clientId);
 
-    public Item updateItem(Long itemId, Item item);
+     Item updateItem(Long itemId, Item item);
 }
