@@ -1,11 +1,13 @@
 package com.jayklef.custodia.service;
 
+import com.jayklef.custodia.exception.CategoryNotFoundException;
 import com.jayklef.custodia.model.Category;
 import com.jayklef.custodia.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements CategoryService{
@@ -23,12 +25,17 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public List<Category> getCategoriesList() {
+    public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 
     @Override
-    public Category getCategoryById(Long categoryId, Category category) {
+    public Category findCategoryById(Long categoryId) throws CategoryNotFoundException {
+        Optional<Category> category = categoryRepository.findById(categoryId);
+
+        if (categoryId == null){
+            throw new CategoryNotFoundException("Category Not found");
+        }
         return categoryRepository.findById(categoryId).get();
     }
 

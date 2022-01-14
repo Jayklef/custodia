@@ -32,4 +32,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(message);
     }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<ErrorMessage> CategoryNotFoundException(CategoryNotFoundException exception,
+                                                                  WebRequest request){
+        ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND,
+                exception.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(message);
+    }
 }

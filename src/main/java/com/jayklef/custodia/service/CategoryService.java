@@ -1,5 +1,6 @@
 package com.jayklef.custodia.service;
 
+import com.jayklef.custodia.exception.CategoryNotFoundException;
 import com.jayklef.custodia.model.Category;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 public interface CategoryService {
      Category saveCategory(Category category);
 
-     List<Category> getCategoriesList();
+     List<Category> findAllCategories();
 
-     Category getCategoryById(Long categoryId, Category category);
+     Category findCategoryById(Long categoryId) throws CategoryNotFoundException;
 }
