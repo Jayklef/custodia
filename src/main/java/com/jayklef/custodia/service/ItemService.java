@@ -2,6 +2,7 @@ package com.jayklef.custodia.service;
 
 import com.jayklef.custodia.dto.ItemDTO;
 import com.jayklef.custodia.exception.ClientNotFoundException;
+import com.jayklef.custodia.exception.ItemNotFoundException;
 import com.jayklef.custodia.model.Item;
 
 import java.util.List;
@@ -9,11 +10,11 @@ import java.util.List;
 public interface ItemService {
      Item saveItem(ItemDTO itemDTO) throws ClientNotFoundException;
 
-     List<Item> getItemsList();
+     List<Item> findItemsList();
 
-     Item getItemById(Long itemId);
+     Item findItemById(Long itemId) throws ItemNotFoundException;
 
-     List<Item> getItemsByClientId(Long clientId);
+     List<Item> findItemByClientId(Long clientId);
 
      Item updateItem(Long itemId, Item item);
 }

@@ -2,6 +2,7 @@ package com.jayklef.custodia.service;
 
 import com.jayklef.custodia.dto.ItemDTO;
 import com.jayklef.custodia.exception.ClientNotFoundException;
+import com.jayklef.custodia.exception.ItemNotFoundException;
 import com.jayklef.custodia.model.Category;
 import com.jayklef.custodia.model.Client;
 import com.jayklef.custodia.model.Item;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -62,17 +64,22 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public List<Item> getItemsList() {
+    public List<Item> findItemsList() {
         return itemRepository.findAll();
     }
 
     @Override
-    public Item getItemById(Long itemId) {
+    public Item findItemById(Long itemId) throws ItemNotFoundException {
+        Optional<Item> item = itemRepository.findById(itemId);
+
+        if (itemId == null){
+            throw new ItemNotFoundException("Item not found");
+        }
         return itemRepository.findById(itemId).get();
     }
 
     @Override
-    public List<Item> getItemsByClientId(Long clientId) {
+    public List<Item> findItemByClientId(Long clientId) {
         Client client = this.clientRepository.findById(clientId).orElseThrow(EntityNotFoundException::new);
         return itemRepository.findAllByClient(client);
     }

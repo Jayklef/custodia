@@ -2,11 +2,13 @@ package com.jayklef.custodia.controller;
 
 import com.jayklef.custodia.dto.ItemDTO;
 import com.jayklef.custodia.exception.ClientNotFoundException;
+import com.jayklef.custodia.exception.ItemNotFoundException;
 import com.jayklef.custodia.model.Item;
 import com.jayklef.custodia.service.ClientService;
 import com.jayklef.custodia.service.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,28 +35,32 @@ public class ItemController {
     }
 
     @GetMapping("/getItemsList")
-    public List<Item> getItemsList(){
+    public ResponseEntity<List<Item>> getItemsList(){
         log.info("Inside getItemsList of ItemController");
-        return itemService.getItemsList();
+        List<Item> items = itemService.findItemsList();
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Item getItemById(@PathVariable("id") Long itemId){
+    public ResponseEntity<Item> getItemById(@PathVariable("id") Long itemId) throws ItemNotFoundException {
         log.info("Inside getItemById of ItemController");
-        return itemService.getItemById(itemId);
+        Item item = itemService.findItemById(itemId);
+        return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
     @GetMapping("/items/clients/{clientId}")
     public ResponseEntity<List<Item>> getItemByClientId(@PathVariable("clientId") Long clientId){
         log.info("Inside getItemByClientId of ItemController");
-        return ResponseEntity.ok().body(itemService.getItemsByClientId(clientId));
+        List<Item> item = itemService.findItemByClientId(clientId);
+        return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public Item updateItem(@PathVariable("id") Long itemId,
+    public ResponseEntity<Item> updateItem(@PathVariable("id") Long itemId,
                             @RequestBody Item item){
+        Item updateItem = itemService.updateItem(itemId, item);
         log.info("Inside updateItem of ItemController");
-        return itemService.updateItem(itemId, item);
+        return new ResponseEntity<>(updateItem, HttpStatus.OK);
     }
 
 }
