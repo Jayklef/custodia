@@ -49,7 +49,7 @@ public class ItemServiceImpl implements ItemService{
                 throw new ClientNotFoundException(String.format("Client with Id: %s not found.", itemDTO.getClientId()));
             }
 
-           //RiskLevel.values();
+           RiskLevel.values();
 
             Item item = Item.builder()
                     .itemName(itemDTO.getItemName())
@@ -58,7 +58,7 @@ public class ItemServiceImpl implements ItemService{
                     .client(client)
                     .build();
 
-        //     RiskLevel.values();
+             RiskLevel.values();
 
             return itemRepository.save(item);
     }
