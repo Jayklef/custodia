@@ -7,11 +7,11 @@ import java.util.List;
 public interface ClientService {
      Client saveClientWithNextOfKin(Client client);
 
-     List<Client> clients();
+     List<Client> findAllClients();
 
-     Client getClientById(Long clientId);
+     Client findClientById(Long clientId);
 
-     Client getClientByClientName(String clientName);
+     Client findClientByName(String clientName);
 
      Client updateClient(Long clientId, Client client);
 

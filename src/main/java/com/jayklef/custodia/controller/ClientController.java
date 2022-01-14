@@ -4,6 +4,8 @@ import com.jayklef.custodia.model.Client;
 import com.jayklef.custodia.service.ClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,41 +24,46 @@ public class ClientController {
     }
 
     @PostMapping("/saveClientWithNextOfKin")
-    public Client saveClientWithNextOfKin(@Valid @RequestBody Client client){
-        log.info("Inside saveClientWithNextOfKin of ClientControlller");
-        return clientService.saveClientWithNextOfKin(client);
+    public ResponseEntity<Client> saveClientWithNextOfKin(@Valid @RequestBody Client client){
+        log.info("Inside saveClientWithNextOfKin of ClientController");
+        Client newClient = clientService.saveClientWithNextOfKin(client);
+        return new ResponseEntity<>(newClient, HttpStatus.CREATED);
     }
 
-    @GetMapping("/clients")
-    public List<Client> clients(){
-        log.info("Inside clients of ClientControlller");
-        return clientService.clients();
+    @GetMapping("/clientLists")
+    public ResponseEntity<List<Client>> clientLists(){
+        log.info("Inside clients of ClientController");
+        List<Client> clientList = clientService.findAllClients();
+        return new ResponseEntity<>(clientList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Client getClientById(@PathVariable ("id") Long clientId){
-        log.info("Inside getClientById of ClientControlller");
-        return clientService.getClientById(clientId);
+    public ResponseEntity<Client> getClientById(@PathVariable ("id") Long clientId){
+        log.info("Inside getClientById of ClientController");
+        Client client = clientService.findClientById(clientId);
+        return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
     @GetMapping("/{name}")
-    public Client getClientByClientName(@PathVariable("name") String clientName){
-        log.info("Inside getClientByClientName of ClientControlller");
-        return clientService.getClientByClientName(clientName);
+    public ResponseEntity<Client> getClientByClientName(@PathVariable("name") String clientName){
+        log.info("Inside getClientByClientName of ClientController");
+        Client client = clientService.findClientByName(clientName);
+        return new ResponseEntity<>(client, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public Client updateClient(@PathVariable("id") Long clientId,
+    public ResponseEntity<Client> updateClient(@PathVariable("id") Long clientId,
                                 @RequestBody Client client){
-        log.info("Inside updateClient of ClientControlller");
-        return clientService.updateClient(clientId, client);
+        log.info("Inside updateClient of ClientController");
+        Client updateClient = clientService.updateClient(clientId, client);
+        return new ResponseEntity<>(updateClient, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteClientById(@PathVariable("id") Long clientId){
-        log.info("Inside deleteClientById of ClientControlller");
+    public ResponseEntity<?> deleteClientById(@PathVariable("id") Long clientId){
+        log.info("Inside deleteClientById of ClientController");
         clientService.deleteClientById(clientId);
-        return "Client deleted successully";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

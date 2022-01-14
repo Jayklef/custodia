@@ -24,17 +24,17 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> clients() {
+    public List<Client> findAllClients() {
         return clientRepository.findAll();
     }
 
     @Override
-    public Client getClientById(Long clientId) {
+    public Client findClientById(Long clientId) {
         return clientRepository.findById(clientId).get();
     }
 
     @Override
-    public Client getClientByClientName(String clientName) {
+    public Client findClientByName(String clientName) {
         return clientRepository.findClientByClientName(clientName);
     }
 
