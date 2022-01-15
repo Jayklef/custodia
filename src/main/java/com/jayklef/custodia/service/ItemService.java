@@ -4,7 +4,10 @@ import com.jayklef.custodia.dto.ItemDTO;
 import com.jayklef.custodia.exception.ClientNotFoundException;
 import com.jayklef.custodia.exception.ItemNotFoundException;
 import com.jayklef.custodia.model.Item;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import java.util.Dictionary;
 import java.util.List;
 
 public interface ItemService {

@@ -11,9 +11,12 @@ import com.jayklef.custodia.repository.CategoryRepository;
 import com.jayklef.custodia.repository.ClientRepository;
 import com.jayklef.custodia.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -115,4 +118,5 @@ public class ItemServiceImpl implements ItemService{
 
         return itemRepository.save(itemInDb);
     }
+
 }
