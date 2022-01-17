@@ -14,20 +14,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
 @RequestMapping("/items")
 public class ItemController {
 
+    @Autowired
     private ItemService itemService;
-    private ClientService clientService;
 
     @Autowired
-    public ItemController(ItemService itemService, ClientService clientService) {
-        this.itemService = itemService;
-        this.clientService = clientService;
-    }
+    private ClientService clientService;
+
 
     @PostMapping("/save")
     public Item saveItem(@RequestBody ItemDTO itemDTO) throws ClientNotFoundException {
@@ -50,9 +49,9 @@ public class ItemController {
     }
 
     @GetMapping("/items/clients/{clientId}")
-    public ResponseEntity<List<Item>> getItemByClientId(@PathVariable("clientId") Long clientId){
+    public ResponseEntity<List<Item>> getAllItemsByClientId(@PathVariable("clientId") Long clientId) throws ClientNotFoundException {
         log.info("Inside getItemByClientId of ItemController");
-        List<Item> item = itemService.findItemByClientId(clientId);
+        List<Item> item = itemService.findAllItemsByClientId(clientId);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
@@ -63,5 +62,4 @@ public class ItemController {
         log.info("Inside updateItem of ItemController");
         return new ResponseEntity<>(updateItem, HttpStatus.OK);
     }
-
 }

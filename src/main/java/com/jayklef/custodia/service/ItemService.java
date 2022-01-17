@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
      Item saveItem(ItemDTO itemDTO) throws ClientNotFoundException;
@@ -17,7 +18,8 @@ public interface ItemService {
 
      Item findItemById(Long itemId) throws ItemNotFoundException;
 
-     List<Item> findItemByClientId(Long clientId);
+     List<Item> findAllItemsByClientId(Long clientId) throws ClientNotFoundException;
 
      Item updateItem(Long itemId, Item item);
+
 }
